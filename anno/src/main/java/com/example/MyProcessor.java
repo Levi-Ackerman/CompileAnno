@@ -14,12 +14,16 @@ import javax.lang.model.element.TypeElement;
 /**
  * Created by zhengxian.lzx@alibaba-inc.com on 2016/7/12.
  */
-@SupportedAnnotationTypes("com.example.MyAnno")
+@SupportedAnnotationTypes({"com.example.MyAnno","com.example.Logger"})
 @SupportedSourceVersion(SourceVersion.RELEASE_7)
 public class MyProcessor extends AbstractProcessor {
     @Override
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
-        System.out.println("hello my processor");
+        for (TypeElement annotation : annotations) {
+            for (Element element : roundEnv.getElementsAnnotatedWith(annotation)) {
+                System.out.println(element.getAnnotation(Logger.class));
+            }
+        }
         return false;
     }
 }
